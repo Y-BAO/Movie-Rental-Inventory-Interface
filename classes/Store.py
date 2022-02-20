@@ -9,6 +9,13 @@ import string
 class Store:
 
 
+    ref = [
+            {'account_type':'sx','max_rental':1,'rating_limit':None},
+            {'account_type':'px','max_rental':3,'rating_limit':None},
+            {'account_type':'sf','max_rental':1,'rating_limit':'R'},
+            {'account_type':'pf','max_rental':3,'rating_limit':'R'}
+                ]
+
     def __init__(self,store_name):
         self.store_name = store_name
         self.customers = Customer.load_all_customers()
@@ -93,9 +100,6 @@ class Store:
 
             writer.writerow(info_dict)
         
-
-
-
 
     def update_customer_list(self):
         my_path = os.path.abspath(os.path.dirname(__file__))

@@ -90,10 +90,6 @@ class Interface:
             else:
                 print('command not found')
 
-    # def check_name(self,video_title):
-    #     for info in self.store.inventory:
-    #         if video_title != info.title:
-    #             return 'video does not exist'
 
     def check_rating(self,account_type,video_title):
         rating = ''
@@ -106,15 +102,6 @@ class Interface:
         else:
             return True
 
-
-
-
-
-
-
-
-
-            
 
     def rent_to_customer(self,customer_id,video_title):
         for info in self.store.customers:
@@ -135,9 +122,6 @@ class Interface:
                 info.copies_available = str(int(info.copies_available) - 1)
             self.store.update_inventory_list()
 
-         
-
-
 
     def show(self,video_title):
         for info in self.store.inventory:
@@ -149,8 +133,7 @@ class Interface:
     def remove_from_customer(self,video_title,customer_id):
         for info in self.store.customers:
             if info.id == customer_id:
-                # print(info.current_video_rentals)
-
+ 
                 videos = info.current_video_rentals.split('/') 
                 # print(videos)
                 for item in videos:
@@ -166,11 +149,7 @@ class Interface:
                 print(f'\nyou have returned video: {video_title}\nThank you for your business!')
                 break
             
-            
-            
-          
-         
-             
+       
     
     def increase_inventory(self,video_title):
         for info in self.store.inventory:
@@ -181,15 +160,7 @@ class Interface:
                 break
         self.store.update_inventory_list()
              
-        
-                
-
-
-
-            
-                
-
-
+  
  
     def check_availability(self,video_title):
         for info in self.store.inventory:
@@ -200,29 +171,6 @@ class Interface:
                 
                 else:
                     return True
-    
-          
-
-            
-    
-  
-             
-         
-                 
-        
-                
-               
-                
-                
-                
-                    
-                     
-                
-                
-
-
-
-          
 
 
     def remove_customer_info(self):
@@ -230,14 +178,7 @@ class Interface:
         
         self.store.delete_customer(customer_id)
 
-
-
-
-   
-
     
-     
-                
 
     def check_id(self):
         while True:
@@ -246,9 +187,6 @@ class Interface:
                 if customer.id == id_of_customer:
                     print(f'welcom customer {customer.first_name} {customer.last_name}')
                     return customer
-                     
-                        
-
 
 
             print('user not found')
@@ -259,14 +197,6 @@ class Interface:
         return len(arr)
 
 
-
-    ref = [
-            {'account_type':'sx','max_rental':1,'rating_limit':None},
-            {'account_type':'px','max_rental':3,'rating_limit':None},
-            {'account_type':'sf','max_rental':1,'rating_limit':'R'},
-            {'account_type':'pf','max_rental':3,'rating_limit':'R'}
-                ]
-
     def check_count(self, account_type,current_rentals):
         
         if len(current_rentals) == 0:
@@ -274,10 +204,10 @@ class Interface:
         else:
             rental_count = self.count(current_rentals)
         
-        for info in self.ref:
+        for info in Store.ref:
             if info['account_type'] == account_type:
                 if rental_count >= info['max_rental']:
-                    print(f'sorry, you have reached max rentals, please return your video before rent the next one \n----consider an upgrade? call:(312) 767-7673 for more info----')
+                    print(f'\nsorry, you have reached max rentals, please return your video before rent the next one \n----consider an upgrade? call:(312) 767-7673 for more info----')
                 else:
                     return True    
                          
