@@ -32,6 +32,11 @@ class Customer:
 
         return all_customers
 
+    def show_all_customer(self):
+        for customer in self.customers:
+            print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
+    
+
 
  
 

@@ -20,23 +20,35 @@ class Store:
             if customer.id == customer_id:
                 if len(customer.current_video_rentals) == 0:
                     print('you do not have any')
-                print('\n'.join(customer.current_video_rentals.split(
+                else:
+                    print(f'\nHi {customer.first_name} {customer.last_name}!!\nYou have these videos: ')
+                    print('\n'.join(customer.current_video_rentals.split(
                     '/'
-                )))
+                    )))
         return 
             # print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
-     
-    def show_all_inventory(self):
-        for video in self.inventory:
-            print(f"id:{video.id}, title:{video.title}, release_year:{video.release_year}, copies_available:{video.copies_available}")
-
-    def show_all_customers(self):
-        for customer in self.customers:
-            print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
     
 
+    
+    def show_all_inventory(self):
+        Inventory.show_all_inventory(self)
+
+    def show_all_customers(self):
+        Customer.show_all_customer(self)
 
 
+    def add_customer_info(self):
+        customer_info = {}
+
+       
+        customer_info['id'] = input('enter an id: ')
+        customer_info['account_type'] = input(f'enter account type\nsx:standard\npx:premium\nsf:standard_family\npf:premium_family\nchoose(sx/px/sf/pf): ')
+        customer_info['first_name'] = input('enter first name: ')
+        customer_info['last_name'] = input('enter last name: ')
+        customer_info['current_video_rentals'] = ''
+        self.add_customer(customer_info)
+
+        
 
 
   

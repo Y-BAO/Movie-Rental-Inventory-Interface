@@ -34,7 +34,7 @@ class Interface:
 
             elif mode == '3':
                 print('\n')
-                self.add_customer_info()
+                self.store.add_customer_info()
             
 
             elif mode == '4':
@@ -59,7 +59,8 @@ class Interface:
                     print(f"Your videos:\n{customer.current_video_rentals.split('/')}\nWhich one would you like to return")
                     print('\n')
                     video_title = input('enter a title: ')
-                    self.remove_from_customer(video_title)
+                    customer_id = customer.id
+                    self.remove_from_customer(video_title,customer_id)
 
 
 
@@ -72,10 +73,6 @@ class Interface:
 
             elif mode == '8':
                 self.store.show_all_customers()
-            
-            elif mode == '9':
-                for info in self.store.customers:
-                    print(f"Full_name: {info.first_name} {info.last_name}")
                 
             elif mode == 'r':
                 Interface('code platoon').run()
@@ -83,37 +80,6 @@ class Interface:
             else:
                 print('command not found')
             
-
-    def remove_from_customer(self,video_title):
-        for info in self.store.customers:
-            videos = info.current_video_rentals.split('/')
-             
-            for item in videos:
-                if item == video_title:
-                    videos.remove(item)
-                    info.current_video_rentals = '/'.join(videos)
-            
-     
-            # if info.current_video_rentals == video_title:
-            #     info.current_video_rentals = info.current_video_rentals.replace(video_title, '')
-                self.store.update_customer_list()
-                # print(len(info.current_video_rentals))
-                self.increase_inventory(video_title)
-             
-    
-    def increase_inventory(self,video_title):
-        for info in self.store.inventory:
-            if info.title == video_title:
-                info.copies_available = str(int(info.copies_available) + 1)
-                # print(info.copies_available)
-                self.store.update_inventory_list()
-                
-
-
-
-            
-                
-
 
     def rent_to_customer(self,customer_id,video_title):
         for info in self.store.customers:
@@ -125,16 +91,79 @@ class Interface:
                     info.current_video_rentals = info.current_video_rentals + '/' + video_title
                     print(info.current_video_rentals)
         self.store.update_customer_list()
-        self.reduce_inventory(video_title)
+         
+        self.reduce_inventory(video_title )
     
     def reduce_inventory(self,video_title):
         for info in self.store.inventory:
             if info.title == video_title:
                 info.copies_available = str(int(info.copies_available) - 1)
-                # print(info.copies_available)
-                self.store.update_inventory_list()
-       
+            self.store.update_inventory_list()
 
+         
+
+                # self.store.update_inventory_list()
+
+
+
+    # def increase_inventory(self,video_title):
+    #     for info in self.store.inventory:
+    #         if info.title == video_title:
+    #             print(f"this is weird{info.id}")
+                 
+
+
+    def show(self,video_title):
+        for info in self.store.inventory:
+            if info.title == video_title:
+                print(info.copies_available)
+
+
+
+    def remove_from_customer(self,video_title,customer_id):
+        for info in self.store.customers:
+            if info.id == customer_id:
+                print(info.current_video_rentals)
+
+                videos = info.current_video_rentals.split('/') 
+                print(videos)
+                for item in videos:
+                    if item == video_title:
+                        videos.remove(item)
+                         
+                        break
+                
+                info.current_video_rentals = '/'.join(videos)
+                print(info.current_video_rentals)
+                self.store.update_customer_list()
+                self.increase_inventory(video_title)
+                break
+            
+            
+            
+          
+         
+             
+    
+    def increase_inventory(self,video_title):
+        for info in self.store.inventory:
+            if info.title == video_title:
+                info.copies_available = str(int(info.copies_available) + 1)
+                print(info.copies_available)
+                
+                break
+        self.store.update_inventory_list()
+             
+        
+                
+
+
+
+            
+                
+
+
+ 
     def check_availability(self,video_title):
         for info in self.store.inventory:
             if info.title == video_title:
@@ -149,22 +178,14 @@ class Interface:
 
             
     
-    # def reduce_in_rental(video_tile):
-    #     pass
-
-    
-
+  
              
          
                  
         
                 
                
-               
-                # user_current_videos = customer.current_video_rentals
-                # user_current_video_count = self.count(user_current_videos)
-               
-
+                
                 
                 
                     
@@ -182,21 +203,10 @@ class Interface:
         self.store.delete_customer(customer_id)
 
     def menu(self):
-        return f"\n\n\n== Welcome to {self.name} Video! ==\n1. View store video inventory\n2. View customer rented videos\n3. Add new customer\n4. Rent video\n5. Return video\n6. Exit\n7. remove a customer\n8: show all customers\n9. show customers\nr. Refresh\n===> "
+        return f"\n\n\n== Welcome to {self.name} Video! ==\n1. View store video inventory\n2. View customer rented videos\n3. Add new customer\n4. Rent video\n5. Return video\n6. Exit\n7. remove a customer\n8: show all customers\nr. Refresh\n===> "
 
 
-    def add_customer_info(self):
-        customer_info = {}
-
-       
-        customer_info['id'] = input('enter an id: ')
-        customer_info['account_type'] = input('enter account type: ')
-        customer_info['first_name'] = input('enter first name: ')
-        customer_info['last_name'] = input('enter last name: ')
-        customer_info['current_video_rentals'] = ''
-        self.store.add_customer(customer_info)
-
-        
+    
      
                 
 
@@ -267,6 +277,4 @@ class Interface:
 
 
 
-
-#  current_rentals = '\n'.join(customer.current_video_rentals.split('/'))
-#                 print(f'your rentals: {current_rentals}')
+ 

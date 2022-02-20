@@ -27,6 +27,9 @@ import re
     # filednames = ['id','account_type','first_name','last_name','current_video_rentals']
 
     # csv_writer = csvDictWriter()
+ 
 
-str = 'abc / abcd abcd'
-print(str.split('/'))
+arr = ['a','b','c','d','e']
+for i in arr:
+    if i == 'a':
+        print(i)

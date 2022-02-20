@@ -35,3 +35,7 @@ class Inventory:
 
             for line in csv_reader:
                 print(line)
+
+    def show_all_inventory(self):
+        for video in self.inventory:
+            print(f"id:{video.id}, title:{video.title}, release_year:{video.release_year}, copies_available:{video.copies_available}")
