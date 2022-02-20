@@ -28,9 +28,7 @@ class Store:
                     '/'
                     )))
         return '\n'
-            # print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
-    
-
+             
     
     def show_all_inventory(self):
         Inventory.show_all_inventory(self)
@@ -72,12 +70,13 @@ class Store:
         for customer in self.customers:
 
             if customer.id == id:
-                if customer.current_video_rentals != 0:
-                    print( f'please return all your videos first{self.view_rentals(id)}')
+                if len(customer.current_video_rentals) != 0:
+                    print( f'\nplease return all your videos first!!{self.view_rentals(id)}')
                     return 
                 self.customers.remove(customer)
 
         self.update_customer_list()
+        print(f'\nthank you {customer.first_name} for your business')
     
 
 
@@ -120,6 +119,7 @@ class Store:
 
     
 
+    
 
 
  

@@ -1,8 +1,8 @@
 
 
 from classes.Store import Store
-import re
-
+from classes.Menu import Menu as m
+ 
 
 
 class Interface:
@@ -15,7 +15,7 @@ class Interface:
         
         while True:
 
-            mode = input(self.menu())
+            mode = input(m.menu(self))
 
 
             if mode == '1':
@@ -48,12 +48,12 @@ class Interface:
                 account_type = customer.account_type
                 current_rentals = customer.current_video_rentals
                 if self.check_count(account_type,current_rentals):
-                    video_title = input('enter a title: ')
+                    video_title = input(f'\nWhich video would you like to rent today?: ')
                     if self.check_rating(customer.account_type,video_title):
 
                         if self.check_availability(video_title):
                             self.rent_to_customer(customer.id,video_title)
-                            print(f'your have rented: {video_title}')
+                            print(f'\nyour have rented: {video_title}\nEnjoy!')
 
             elif mode == '5':
                 print('\n')
@@ -89,6 +89,11 @@ class Interface:
 
             else:
                 print('command not found')
+
+    # def check_name(self,video_title):
+    #     for info in self.store.inventory:
+    #         if video_title != info.title:
+    #             return 'video does not exist'
 
     def check_rating(self,account_type,video_title):
         rating = ''
@@ -144,10 +149,10 @@ class Interface:
     def remove_from_customer(self,video_title,customer_id):
         for info in self.store.customers:
             if info.id == customer_id:
-                print(info.current_video_rentals)
+                # print(info.current_video_rentals)
 
                 videos = info.current_video_rentals.split('/') 
-                print(videos)
+                # print(videos)
                 for item in videos:
                     if item == video_title:
                         videos.remove(item)
@@ -155,10 +160,10 @@ class Interface:
                         break
                 
                 info.current_video_rentals = '/'.join(videos)
-                print(info.current_video_rentals)
+                # print(info.current_video_rentals)
                 self.store.update_customer_list()
                 self.increase_inventory(video_title)
-                print(f'you have returned {video_title}')
+                print(f'\nyou have returned video: {video_title}\nThank you for your business!')
                 break
             
             
@@ -191,7 +196,7 @@ class Interface:
             if info.title == video_title:
                 stock = info.copies_available
                 if int(stock) == 0:
-                    print('sorry, this video is currently out of order')
+                    print(f'Sorry, this video is currently out of order\ncheck back later ~')
                 
                 else:
                     return True
@@ -228,9 +233,7 @@ class Interface:
 
 
 
-    def menu(self):
-        return f"\n\n\n== Welcome to {self.name} Video! ==\n1. View store video inventory\n2. View customer rented videos\n3. Add new customer\n4. Rent video\n5. Return video\n6. Exit\n7. remove a customer\n8: show all customers\nr. Refresh\n===> "
-
+   
 
     
      
@@ -274,12 +277,10 @@ class Interface:
         for info in self.ref:
             if info['account_type'] == account_type:
                 if rental_count >= info['max_rental']:
-                    print('you have reached max rentals')
+                    print(f'sorry, you have reached max rentals, please return your video before rent the next one \n----consider an upgrade? call:(312) 767-7673 for more info----')
                 else:
                     return True    
                          
-
-
 
 
 
