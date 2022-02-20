@@ -1,4 +1,4 @@
- 
+import re 
 import os 
 import csv
 from classes.Customers import Customer
@@ -11,8 +11,20 @@ class Store:
         self.store_name = store_name
         self.customers = Customer.load_all_customers()
         self.inventory = Inventory.load_all_inventories()
-        
     
+ 
+        
+    def view_rentals(self,customer_id):
+        for customer in self.customers:
+             
+            if customer.id == customer_id:
+                if len(customer.current_video_rentals) == 0:
+                    print('you do not have any')
+                print('\n'.join(customer.current_video_rentals.split(
+                    '/'
+                )))
+                 
+            # print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
      
     def show_all_inventory(self):
         for video in self.inventory:
@@ -31,9 +43,14 @@ class Store:
     
 
 
+    def delete_customer(self,id):
+        for customer in self.customers:
+            if customer.id == id:
+                self.customers.remove(customer)
 
-
+        self.update_customer_list()
     
+
 
     @classmethod
     def save_new_customer(cls,new_customer):
@@ -48,6 +65,31 @@ class Store:
 
             writer.writerow(info_dict)
         
+
+
+
+
+    def update_customer_list(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path,"../data/customers.csv")
+
+        with open(path,'w') as csvfile:
+            customer_csv = csv.writer(csvfile, delimiter = ',')
+            customer_csv.writerow(['id','account_type','first_name','last_name','current_video_rentals'])
+            for customer in self.customers:
+                customer_csv.writerow([customer.id,customer.account_type,customer.first_name,customer.last_name,customer.current_video_rentals])
+
+    def update_inventory_list(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path,"../data/inventory.csv")
+
+        with open(path,'w') as csvfile:
+            inventory_csv = csv.writer(csvfile, delimiter = ',')
+            inventory_csv.writerow(['id','title','rating','release_year','copies_available'])
+            for inventory in self.inventory:
+                inventory_csv.writerow([inventory.id,inventory.title,inventory.rating,inventory.release_year,inventory.copies_available])
+
+    
 
 
 
@@ -78,24 +120,4 @@ class Store:
 
 
 
-    # def add_customer(self,customer_data):
-    #     self.customers.append(Customer(**customer_data))
-    #     self.save()
-
-
-    # def delete_customer(self,id):
-    #     for customer in self.customers:
-    #         if customer.id == id:
-    #             self.customers.remove(customer)
-    #             break
-    #     self.save()
-
-    # def save(self):
-    #     my_path = os.path.abspath(os.path.dirname(__file__))
-    #     path = os.path.join(my_path,"../data/customers.csv")
-
-    #     with open(path,'w') as csvfile:
-    #         customer_csv = csv.writer(csvfile, delimiter = ',')
-    #         customer_csv.writerrow(['id','account_type','first_name','last_name','current_video_rentals'])
-    #         for customer in self.customers:
-    #             customer_csv.writerow([customer.id,customer.account_type,customer.first_name,customer.last_name,customer.current_video_rentals])
+    

@@ -13,7 +13,7 @@ class Customer:
         self.first_name = first_name
         self.last_name = last_name
         self.current_video_rentals = current_video_rentals
-        self.counter = 0
+        
 
  
 
@@ -48,32 +48,7 @@ class Customer:
 
 
 
-
-
-
-
-    # @classmethod
-    # def save_all_customers(cls,all_customers):
-
-    #     my_path = os.path.abspath(os.path.dirname(__file__))
-    #     path = os.path.join(my_path,cls.DATA_FILE)
-
-    #     with open(path,mode = 'w') as csv_file:
-
-    #         writer = csv.DictWriter(csv_file,fieldnames=['id','account_type','first_name','last_name','current_video_rentals'])
-
-    #         writer.writeheader()
-            
-    #         for customer in all_customers:
-    #             info_dict = customer.__dict__
-
-    #             writer.writerow(info_dict)
-
-    #     return all_customers
-
-
-
-
+ 
 
 
      

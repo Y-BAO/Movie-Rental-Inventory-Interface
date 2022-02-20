@@ -1,6 +1,7 @@
 # from asyncore import read
 # import csv
-
+from operator import indexOf
+import re
 
 
 
@@ -26,3 +27,6 @@
     # filednames = ['id','account_type','first_name','last_name','current_video_rentals']
 
     # csv_writer = csvDictWriter()
+
+str = 'abc / abcd abcd'
+print(str.split('/'))
