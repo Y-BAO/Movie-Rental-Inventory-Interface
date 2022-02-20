@@ -17,13 +17,14 @@ class Interface:
 
             mode = input(self.menu())
 
+
             if mode == '1':
                 print('\n')
                 self.store.show_all_inventory()
                 print('\n')
 
             
-            if mode == '2':
+            elif mode == '2':
                 print('\n')
                 customer_id =  input("enter customer id: ")
              
@@ -31,12 +32,12 @@ class Interface:
 
                 print('\n')
 
-            if mode == '3':
+            elif mode == '3':
                 print('\n')
                 self.add_customer_info()
             
 
-            if mode == '4':
+            elif mode == '4':
                 print('\n')
                 customer = self.check_id()
                 account_type = customer.account_type
@@ -46,7 +47,7 @@ class Interface:
                     if self.check_availability(video_title):
                         self.rent_to_customer(customer.id,video_title)
             
-            if mode == '5':
+            elif mode == '5':
                 print('\n')
                 customer = self.check_id()
                 current_rentals = customer.current_video_rentals
@@ -55,35 +56,46 @@ class Interface:
                     print('you have nothing to return')
                 else:
                     print('\n')
-                    print(f"Your videos:\n{customer.current_video_rentals}\nWhich one would you like to return")
+                    print(f"Your videos:\n{customer.current_video_rentals.split('/')}\nWhich one would you like to return")
                     print('\n')
                     video_title = input('enter a title: ')
                     self.remove_from_customer(video_title)
 
 
 
-            if mode == '6':
+            elif mode == '6':
                 print("see you soon")
                 break
 
-            if mode == '7':
+            elif mode == '7':
                 self.remove_customer_info()
 
-            if mode == '8':
+            elif mode == '8':
                 self.store.show_all_customers()
             
-            if mode == '9':
+            elif mode == '9':
                 for info in self.store.customers:
                     print(f"Full_name: {info.first_name} {info.last_name}")
                 
-            if mode == 'r':
+            elif mode == 'r':
                 Interface('code platoon').run()
 
+            else:
+                print('command not found')
+            
 
     def remove_from_customer(self,video_title):
         for info in self.store.customers:
-            if info.current_video_rentals == video_title:
-                info.current_video_rentals = info.current_video_rentals.replace(video_title, '')
+            videos = info.current_video_rentals.split('/')
+             
+            for item in videos:
+                if item == video_title:
+                    videos.remove(item)
+                    info.current_video_rentals = '/'.join(videos)
+            
+     
+            # if info.current_video_rentals == video_title:
+            #     info.current_video_rentals = info.current_video_rentals.replace(video_title, '')
                 self.store.update_customer_list()
                 # print(len(info.current_video_rentals))
                 self.increase_inventory(video_title)

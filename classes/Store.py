@@ -35,6 +35,10 @@ class Store:
             print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
     
 
+
+
+
+
   
     def add_customer(self,customer_info):
         new_customer = Customer(**customer_info)
