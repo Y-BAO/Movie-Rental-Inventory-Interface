@@ -18,9 +18,7 @@ class Interface:
             mode = input(self.menu())
 
             if mode == '1':
-                
                 print('\n')
-                
                 self.store.show_all_inventory()
                 print('\n')
 
@@ -34,11 +32,12 @@ class Interface:
                 print('\n')
 
             if mode == '3':
+                print('\n')
                 self.add_customer_info()
             
 
             if mode == '4':
-               
+                print('\n')
                 customer = self.check_id()
                 account_type = customer.account_type
                 current_rentals = customer.current_video_rentals
@@ -46,6 +45,22 @@ class Interface:
                     video_title = input('enter a title: ')
                     if self.check_availability(video_title):
                         self.rent_to_customer(customer.id,video_title)
+            
+            if mode == '5':
+                print('\n')
+                customer = self.check_id()
+                current_rentals = customer.current_video_rentals
+                if len(current_rentals) == 0:
+                    print('\n')
+                    print('you have nothing to return')
+                else:
+                    print('\n')
+                    print(f"Your videos:\n{customer.current_video_rentals}\nWhich one would you like to return")
+                    print('\n')
+                    video_title = input('enter a title: ')
+                    self.remove_from_customer(video_title)
+
+
 
             if mode == '6':
                 print("see you soon")
@@ -56,7 +71,35 @@ class Interface:
 
             if mode == '8':
                 self.store.show_all_customers()
+            
+            if mode == '9':
+                for info in self.store.customers:
+                    print(f"Full_name: {info.first_name} {info.last_name}")
+                
+            if mode == 'r':
+                Interface('code platoon').run()
 
+
+    def remove_from_customer(self,video_title):
+        for info in self.store.customers:
+            if info.current_video_rentals == video_title:
+                info.current_video_rentals = info.current_video_rentals.replace(video_title, '')
+                self.store.update_customer_list()
+                # print(len(info.current_video_rentals))
+                self.increase_inventory(video_title)
+             
+    
+    def increase_inventory(self,video_title):
+        for info in self.store.inventory:
+            if info.title == video_title:
+                info.copies_available = str(int(info.copies_available) + 1)
+                # print(info.copies_available)
+                self.store.update_inventory_list()
+                
+
+
+
+            
                 
 
 
@@ -76,7 +119,7 @@ class Interface:
         for info in self.store.inventory:
             if info.title == video_title:
                 info.copies_available = str(int(info.copies_available) - 1)
-                print(info.copies_available)
+                # print(info.copies_available)
                 self.store.update_inventory_list()
        
 
@@ -123,11 +166,11 @@ class Interface:
 
 
     def remove_customer_info(self):
-        customer_id = str(input('enter an id'))
+        customer_id = str(input('enter an id: '))
         self.store.delete_customer(customer_id)
 
     def menu(self):
-        return f"\n\n\n== Welcome to {self.name} Video! ==\n1. View store video inventory\n2. View customer rented videos\n3. Add new customer\n4. Rent video\n5. Return video\n6. Exit\n7. remove a customer\n8: show all customers\n===> "
+        return f"\n\n\n== Welcome to {self.name} Video! ==\n1. View store video inventory\n2. View customer rented videos\n3. Add new customer\n4. Rent video\n5. Return video\n6. Exit\n7. remove a customer\n8: show all customers\n9. show customers\nr. Refresh\n===> "
 
 
     def add_customer_info(self):
@@ -147,7 +190,7 @@ class Interface:
 
     def check_id(self):
         while True:
-            id_of_customer = input('enter your id')
+            id_of_customer = input('enter your id: ')
             for customer in self.store.customers:
                 if customer.id == id_of_customer:
                     print(f'welcom customer {customer.first_name} {customer.last_name}')
@@ -179,8 +222,6 @@ class Interface:
             rental_count = 0
         else:
             rental_count = self.count(current_rentals)
-
-
         
         for info in self.ref:
             if info['account_type'] == account_type:
