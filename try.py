@@ -2,7 +2,8 @@
 # import csv
 from operator import indexOf
 import re
-
+import string
+import random
 
 
 # all_customers = []
@@ -29,7 +30,10 @@ import re
     # csv_writer = csvDictWriter()
  
 
-arr = ['a','b','c','d','e']
-for i in arr:
-    if i == 'a':
-        print(i)
+# arr = ['a','b','c','d','e']
+# for i in arr:
+#     if i == 'a':
+#         print(i)
+
+new_id = ''.join(random.sample(string.ascii_letters + string.digits,5))
+print(new_id)

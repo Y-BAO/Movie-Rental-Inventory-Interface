@@ -3,6 +3,8 @@ import os
 import csv
 from classes.Customers import Customer
 from classes.Inventory import Inventory
+import random
+import string
 
 class Store:
 
@@ -19,13 +21,13 @@ class Store:
              
             if customer.id == customer_id:
                 if len(customer.current_video_rentals) == 0:
-                    print('you do not have any')
+                    print(f'Hi! {customer.first_name} {customer.last_name}\nyou do not have any rentals yet, rent your first videos with {self.store_name}!!!')
                 else:
                     print(f'\nHi {customer.first_name} {customer.last_name}!!\nYou have these videos: ')
                     print('\n'.join(customer.current_video_rentals.split(
                     '/'
                     )))
-        return 
+        return '\n'
             # print(f"id:{customer.id}, account_type:{customer.account_type}, first_name:{customer.first_name}, last_name:{customer.last_name}, current_video_rentals:{customer.current_video_rentals}")
     
 
@@ -41,14 +43,21 @@ class Store:
         customer_info = {}
 
        
-        customer_info['id'] = input('enter an id: ')
+        customer_info['id'] = self.id_generator()
         customer_info['account_type'] = input(f'enter account type\nsx:standard\npx:premium\nsf:standard_family\npf:premium_family\nchoose(sx/px/sf/pf): ')
         customer_info['first_name'] = input('enter first name: ')
         customer_info['last_name'] = input('enter last name: ')
         customer_info['current_video_rentals'] = ''
         self.add_customer(customer_info)
+        return customer_info
 
-        
+    def id_generator(self):
+        new_id = ''.join(random.sample(string.ascii_letters + string.digits,5))
+        while True:
+            for info in self.customers:
+                if info.id != new_id:
+                    return new_id
+
 
 
   
@@ -61,7 +70,11 @@ class Store:
 
     def delete_customer(self,id):
         for customer in self.customers:
+
             if customer.id == id:
+                if customer.current_video_rentals != 0:
+                    print( f'please return all your videos first{self.view_rentals(id)}')
+                    return 
                 self.customers.remove(customer)
 
         self.update_customer_list()
