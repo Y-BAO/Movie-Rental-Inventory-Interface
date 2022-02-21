@@ -48,6 +48,7 @@ class Interface:
                 account_type = customer.account_type
                 current_rentals = customer.current_video_rentals
                 if self.check_count(account_type,current_rentals):
+                    self.store.show_all_inventory()
                     video_title = input(f'\nWhich video would you like to rent today?: ')
                     if self.check_rating(customer.account_type,video_title):
 
