@@ -75,7 +75,7 @@ class Interface:
 
 
             elif mode == '6':
-                print("see you soon")
+                print(f"\n\nThank you for choosing Code Platoon Videos!\nSee you next time!\n\n ")
                 break
 
             elif mode == '7':
