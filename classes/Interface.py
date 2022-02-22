@@ -49,7 +49,7 @@ class Interface:
                 current_rentals = customer.current_video_rentals
                 if self.check_count(account_type,current_rentals):
                     self.store.show_all_inventory()
-                    video_title = input(f'\nWhich video would you like to rent today?: ')
+                    video_title = input(f'\nWhich video would you like to rent today?\n(Please enter the full name of the video you would like to rent.): ')
                     if self.check_rating(customer.account_type,video_title):
 
                         if self.check_availability(video_title):
@@ -65,7 +65,7 @@ class Interface:
                     print('you have nothing to return')
                 else:
                     print('\n')
-                    print(f"\n{self.store.view_rentals(customer.id)}\nWhich one would you like to return?")
+                    print(f"\n{self.store.view_rentals(customer.id)}\nWhich one would you like to return?\n(Please enter the full name of the video you would like to return)")
                     print('\n')
                     video_title = input('enter a title: ')
                     customer_id = customer.id
@@ -97,11 +97,16 @@ class Interface:
         for info in self.store.inventory:
             if info.title == video_title:
                 rating = info.rating
-        if account_type == 'pf' or account_type == 'sf' and rating == 'R':
-            print('your account type does not allow this video')
+        if account_type == 'pf' and rating == 'R':
+            print('Sorry, your account type does not allow this video.')
+            return False
+        elif account_type == 'sf' and rating == 'R':
+            print('Sorry, your account type does not allow this video.')
             return False
         else:
             return True
+    
+    # or 
 
 
     def rent_to_customer(self,customer_id,video_title):
